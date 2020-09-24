@@ -1,0 +1,41 @@
+{
+  "name": "@brixtol/rollup-plugin-utils",
+  "version": "0.1.0",
+  "description": "Rollup plugin utilities for working with the Brixtol Textiles monorepo codebase",
+  "author": "ΝΙΚΟΛΑΣ ΣΑΒΒΙΔΗΣ",
+  "owner": "SISSEL SAAS",
+  "license": "MIT",
+  "main": "./package/index.cjs.js",
+  "types": "index.d.ts",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brixtol/rollup-plugin-utils"
+  },
+  "bugs": {
+    "url": "https://github.com/brixtol/rollup-plugin-utils/issues"
+  },
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c --environment prod",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "release": {
+    "branches": [
+      "master",
+      "next"
+    ]
+  },
+  "devDependencies": {
+    "@brixtol/eslint-config": "workspace:^1.0.0",
+    "@brixtol/prettier-config": "workspace:^1.0.0",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "jsonminify": "^0.4.1",
+    "strip-indent": "^3.0.0",
+    "strip-json-comments": "^3.1.1"
+  }
+}
