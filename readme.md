@@ -18,7 +18,7 @@ We here at Brixtol Textiles leverage [Rollup](#) exclusively. This package is a 
 ## Install
 
 ```cli
-pnpm i @brixtol/rollup-utils --save-dev
+pnpm link @brixtol/rollup-utils --save-dev
 ```
 
 > This package is not available on the public NPM register
