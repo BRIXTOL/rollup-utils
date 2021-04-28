@@ -1,8 +1,21 @@
 import jsonStrip from 'strip-json-comments'
 import jsonMinify from 'jsonminify'
-import { basename } from 'path'
+import { basename, resolve } from 'path'
 import { statSync } from 'fs-extra'
 import stripIndent from 'strip-indent'
+
+
+/* -------------------------------------------- */
+/* PATH RESOLVER                                */
+/* -------------------------------------------- */
+
+/**
+ * Path Resolver Helper
+ *
+ * @param {string} url
+ * @returns {string}
+ */
+export const path = url => resolve(process.cwd(), url)
 
 /* -------------------------------------------- */
 /*                 JSON MINIFIER                */
@@ -32,9 +45,11 @@ export const jsonmin = (content) => {
  * @param {array} prodPlugins
  */
 export const plugins = (devPlugins, prodPlugins) => {
+
   if (process.env.prod) return [ ...devPlugins, ...prodPlugins ]
 
   return devPlugins
+
 }
 
 /* -------------------------------------------- */
