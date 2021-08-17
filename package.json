@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@brixtol/prettier-config": "workspace:^1.0.3",
+    "@brixtol/rollup-utils": "workspace:^0.2.0",
     "@rollup/plugin-beep": "^0.2.0",
     "@rollup/plugin-commonjs": "^17.1.0",
     "@types/jsonminify": "^0.4.1",
