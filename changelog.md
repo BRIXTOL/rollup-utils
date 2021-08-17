@@ -5,6 +5,7 @@
 - Overhauled utilities
 - Support for consuming configuration JSON files like `tsconfig.json` and `package.json`
 - Added `env.*` support utility
+- Extended `banner` utility
 - Converted to `mjs` build export type
 - Provided detailed typings for provided utilities
 
