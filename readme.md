@@ -1,46 +1,25 @@
-## @brixtol/rollup-utils
+# @brixtol/rollup-utils
 
-Various rollup plugin utilities for working with packages in the [Brixtol Textles](#) monorepo workspace. These utilities are collection of commonly used modules we use in development on mostly internal closed source applications.
+Various rollup plugin utilities for working with packages in the [Brixtol Textiles](#) monorepo workspace. These utilities are collection of commonly used modules leveraged in development for both closed and open source and modules.
 
 ### Why?
 
-We here at Brixtol Textiles leverage [Rollup](#) exclusively. This package is a collection of various project specific plugins that assist in the bundling process of various packages. The utilities exported in this module provide a clean and easy way to execute commonly used functions.
+We here at Brixtol Textiles leverage [Rollup](https://rollupjs.org/guide/en/) exclusively. This package is a collection of various project specific plugins that assist in the bundling and transpilation process for various packages. The utilities exported in this module provide a clean and easy way to execute commonly used functions.
 
-### Utilities
+# Utilities
 
-| Export               | Description                                                                |
-| -------------------- | -------------------------------------------------------------------------- |
-| `path(string)`       | Resolves a Path to location to current working directory.                  |
-| `plugins([],[])`     | Separates development and production plugins based on environment variable |
-| `banner({}, string)` | Generates comment banner in bundles that includes License and information  |
-| `jsonmin(string)`    | Minifies JSON files passed in via [rollup-plugin-globlin](#)               |
+| Export               | Description                                                               |
+| -------------------- | ------------------------------------------------------------------------- |
+| `path(string)`       | Resolves a Path to location to current working directory.                 |
+| `env.*`              | Provides ENV operations for `dev`, `prod` and `watch` builds.             |
+| `config.*`           | Enables `package.json` or other config files within `rollup.config.mjs`   |
+| `banner({}, string)` | Generates comment banner in bundles that includes License and information |
+| `jsonmin(string)`    | Minifies JSON, used with [rollup-plugin-copy](https://git.io/J0Lv9)       |
 
-## Install
+# Install
 
 ```cli
-pnpm link @brixtol/rollup-utils --save-dev
-```
-
-> This package is not available on the public NPM register
-
-## Usage
-
-```js
-import { plugins } from "@brixtol/rollup-utils";
-
-export default {
-  input: "src/index.js",
-  output: {
-    dir: "output",
-    format: "cjs",
-  },
-  plugins: plugins([
-      // Dev Plugins
-    ], [
-      // Prod Plugins
-    ]),
-  ]
-};
+pnpm i @brixtol/rollup-utils --save-dev
 ```
 
 ## Contributing
