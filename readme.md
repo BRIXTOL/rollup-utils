@@ -1,6 +1,6 @@
 # @brixtol/rollup-utils
 
-Various rollup plugin utilities for working with packages in the [Brixtol Textiles](#) monorepo workspace. These utilities are collection of commonly used modules leveraged in development for both closed and open source and modules.
+Various rollup plugin utilities for working with packages in the [Brixtol Textiles](https://brixtoltextiles.com) monorepo workspace. These utilities are collection of commonly used modules leveraged in development for both closed and open source and modules.
 
 ### Why?
 
