@@ -1,6 +1,6 @@
-import { PackageJSON } from './package'
-import { TSConfig } from './tsconfig'
-import { RollupOptions, Plugin } from 'rollup'
+import { PackageJSON } from './package';
+import { TSConfig } from './tsconfig';
+import { Plugin } from 'rollup';
 
 export function jsonmin(content: string): string;
 
@@ -11,13 +11,18 @@ type IEnv = (
 ) => (
   initial: string | string[] | Plugin[] | boolean
 ) => (
-  combined: string  | string[] | Plugin[] | boolean
+  combined: string | string[] | Plugin[] | boolean
 ) => []
 
 /**
  * Validates env variable and executes condition based on result.
  */
 export const env: {
+
+  /**
+   * Returns the parsed contents of a `.env` file
+   */
+  get vars(): boolean;
   /**
    * Sugar getter for `process.env.prod` flag, returning `true`
    * when in prod mode else `false`
@@ -72,7 +77,7 @@ export const env: {
    * ```
    */
   if?: IEnv;
-}
+};
 
 /**
  * Returns configuration of the current directory and package
@@ -110,20 +115,20 @@ export const config: {
     find: string,
     replacement: string
   }>;
-  output: {
-    get cjs(): string;
-    get esm(): string;
-  }
-}
 
+  output: {
+    get cjs (): string | null;
+    get esm (): string | null;
+    get exports(): string | object | null;
+    get main (): string | null;
+    get module (): string | null;
+  }
+};
 
 /**
  * Banner - Applies a licence banner to output bundles generated
  * by rollup for proprietary software of the project
  */
 export function banner(
-  license:  "MIT" | "PROPRIETARY" | "CC BY-NC-ND 4.0"
-):  string;
-
-
-
+  license: 'MIT' | 'PROPRIETARY' | 'CC BY-NC-ND 4.0'
+): string;

@@ -1,9 +1,10 @@
-import jsonStrip from "strip-json-comments";
-import jsonMinify from "jsonminify";
-import { basename, join, resolve } from "path";
-import { readFileSync, existsSync } from "fs";
-import stripIndent from "strip-indent";
-import chalk from "chalk";
+import jsonStrip from 'strip-json-comments';
+import jsonMinify from 'jsonminify';
+import { basename, join, resolve } from 'path';
+import { readFileSync, existsSync } from 'fs';
+import stripIndent from 'strip-indent';
+import chalk from 'chalk';
+import dotenv from 'dotenv';
 
 /**
  * Path Resolver Helper
@@ -17,63 +18,61 @@ export const path = (url) => resolve(process.cwd(), url);
  * Environment conditional executor
  */
 export const env = {
-  get dev() {
-    return !process.env.prod;
-  },
-  get prod() {
-    return process.env.prod === "true";
-  },
-  get watch() {
-    return process.env.ROLLUP_WATCH === "true";
-  },
-  is: (condition, returns) =>
-    env[condition] ? returns : typeof returns === "function" ? null : false,
-  if: (condition) => (initial) => (combined) => {
+
+  get vars () { return dotenv.config(); },
+  get dev () { return !process.env.prod; },
+  get prod () { return process.env.prod === 'true'; },
+  get watch () { return process.env.ROLLUP_WATCH === 'true'; },
+  is: (condition, returns) => env[condition]
+    ? returns
+    : typeof returns === 'function'
+      ? null
+      : false,
+  if: condition => initial => combined => {
+
     if (env[condition]) return initial;
 
     const arrInitial = Array.isArray(initial);
     const arrCombined = Array.isArray(combined);
 
-    if (arrInitial && arrCombined) return [...initial, ...combined];
+    if (arrInitial && arrCombined) return [ ...initial, ...combined ];
 
-    const strInitial = typeof initial === "string";
-    const strCombined = typeof combined === "string";
+    const strInitial = typeof initial === 'string';
+    const strCombined = typeof combined === 'string';
 
-    if (arrInitial && strCombined) return [...initial, combined];
-    if (strInitial && arrCombined) return [initial, ...combined];
-    if (strInitial && strCombined) return [initial, combined];
+    if (arrInitial && strCombined) return [ ...initial, combined ];
+    if (strInitial && arrCombined) return [ initial, ...combined ];
+    if (strInitial && strCombined) return [ initial, combined ];
 
-    const fnInitial = typeof initial === "function";
-    const fnCombined = typeof combined === "function";
+    const fnInitial = typeof initial === 'function';
+    const fnCombined = typeof combined === 'function';
 
-    if (arrInitial && fnCombined) return [...initial, combined];
-    if (fnInitial && arrCombined) return [initial, ...combined];
-    if (fnInitial && fnCombined) return [initial, combined];
+    if (arrInitial && fnCombined) return [ ...initial, combined ];
+    if (fnInitial && arrCombined) return [ initial, ...combined ];
+    if (fnInitial && fnCombined) return [ initial, combined ];
 
     return combined;
-  },
+
+  }
+
 };
 
 /**
  * Provides config files shortcuts
  */
 export const config = (() => {
+
   const cwd = process.cwd();
-  const file = readFileSync(join(cwd, "package.json")).toString();
+  const file = readFileSync(join(cwd, 'package.json')).toString();
   const pkg = JSON.parse(jsonStrip(file));
-  const path = join(cwd, "tsconfig.json");
+  const path = join(cwd, 'tsconfig.json');
 
   return {
-    get cwd() {
-      return cwd;
-    },
-    get package() {
-      return pkg;
-    },
-    get external() {
-      return Object.keys(pkg);
-    },
-    get tsconfig() {
+    get cwd () { return cwd; }
+    , get package () { return pkg; }
+    , get external () { return Object.keys(pkg.dependencies); }
+    , get tsconfig () {
+
       if (existsSync(path)) {
         const json = readFileSync(path).toString();
         const tsconfig = JSON.parse(jsonStrip(json));
@@ -81,21 +80,19 @@ export const config = (() => {
       }
 
       return null;
-    },
-    path: (uri) => resolve(cwd, uri),
-    alias: (ids, src = "src") =>
-      ids.map((find) => ({
-        find,
-        replacement: resolve(cwd, `./${src}/${find}`),
-      })),
-    output: {
-      get cjs() {
-        return pkg.exports.require;
-      },
-      get esm() {
-        return pkg.exports.import;
-      },
-    },
+    }
+    , path: (uri) => resolve(cwd, uri)
+    , alias: (ids, src = 'src') => ids.map((find) => ({
+      find
+      , replacement: resolve(cwd, `./${src}/${find}`)
+    }))
+    , output: {
+      get cjs () { return pkg.exports.require || null; },
+      get esm () { return pkg.exports.import || null; },
+      get exports () { return pkg.exports || null; },
+      get main () { return pkg.main || null; },
+      get module () { return pkg.module || null; }
+    }
   };
 })();
 
@@ -105,6 +102,7 @@ export const config = (() => {
  * @param {string} content
  */
 export const jsonmin = (content) => {
+
   if (content.length === 0) {
     return console.log(chalk`{italic  JSON file is empty, skipping}`);
   }
@@ -117,6 +115,7 @@ export const jsonmin = (content) => {
   } catch (e) {
     throw new Error(e);
   }
+
 };
 
 /**
@@ -125,13 +124,14 @@ export const jsonmin = (content) => {
  * @param {object} package
  * @returns {string}
  */
-export const banner = (license = "PROPRIETARY") => {
+export const banner = (license = 'PROPRIETARY') => {
+
   const { name, main, version, author } = config.package;
   const owner = author;
-  const date = new Date().toISOString().replace(/T/, " ").substr(0, 19);
+  const date = new Date().toISOString().replace(/T/, ' ').substr(0, 19);
 
   switch (license) {
-    case "PROPRIETARY":
+    case 'PROPRIETARY':
       return stripIndent(
         `
       /**
@@ -154,7 +154,7 @@ export const banner = (license = "PROPRIETARY") => {
        *
        */`
       );
-    case "MIT":
+    case 'MIT':
       return stripIndent(
         `
       /**
@@ -189,7 +189,7 @@ export const banner = (license = "PROPRIETARY") => {
        * SOFTWARE.
        */`
       );
-    case "CC BY-NC-ND 4.0":
+    case 'CC BY-NC-ND 4.0':
       return stripIndent(
         `
       /**
