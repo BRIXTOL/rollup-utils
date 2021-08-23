@@ -31,7 +31,8 @@ export default Rollup(
       'strip-indent',
       'strip-json-comments',
       'path',
-      'fs'
+      'fs',
+      'dotenv'
     ],
     plugins: [
       del(
