@@ -1,0 +1,10 @@
+# DOT FILES
+.prettierignore
+.gitignore
+
+# FILES
+rollup.config.mjs
+
+# DIRECTORIES
+src
+test
