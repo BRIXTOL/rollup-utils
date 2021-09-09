@@ -1,6 +1,6 @@
 {
   "name": "@brixtol/rollup-utils",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Rollup plugin utilities for working with the Brixtol Textiles monorepo codebase",
   "author": {
     "name": "Νίκος Σαβίδης ",
@@ -54,6 +54,7 @@
     "fs-extra": "^9.1.0",
     "jsonminify": "^0.4.1",
     "strip-indent": "^3.0.0",
-    "strip-json-comments": "^3.1.1"
+    "strip-json-comments": "^3.1.1",
+    "types-json": "^1.2.2"
   }
 }

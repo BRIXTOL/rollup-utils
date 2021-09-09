@@ -1,13 +1,47 @@
-import { ESLintConfig } from "types-eslintrc";
+/* eslint-disable no-unreachable */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-unused-vars */
+
+import { ESLintConfig } from 'types-eslintrc';
+import { JSONObject } from 'types-json';
+
+// -----------------------------
 
 /**
- * Lifted From:
+ * All these types are lifted From:
  * https://github.com/bconnorwhite/types-pkg-json
  */
 
 // -----------------------------
 
-type TypeScriptConfiguration = {
+/**
+ * Matches any [primitive value](https://developer.mozilla.org/en-US/docs/Glossary/Primitive).
+ */
+export type Primitive =
+ | null
+ | undefined
+ | string
+ | number
+ | boolean
+ | symbol
+ | bigint;
+
+/**
+ * Allows creating a union type by combining primitive types and literal types
+ * without sacrificing auto-completion in IDEs for the literal type part of the union.
+ * Currently, when a union type of a primitive type is combined with literal types,
+ * TypeScript loses all information about the combined literals.
+ * Thus, when such type is used in an IDE with autocompletion, no suggestions are
+ * made for the declared literals. This type is a workaround for
+ * [Microsoft/TypeScript#29729](https://github.com/Microsoft/TypeScript/issues/29729).
+ *
+ * It will be removed as soon as it's not needed anymore.
+*/
+export type LiteralUnion<LiteralType extends BaseType, BaseType extends Primitive> =
+ | LiteralType
+ | (BaseType & {_?: never});
+
+declare type TypeScriptConfiguration = {
   /**
    * Location of the bundled TypeScript declaration file.
    */
@@ -18,21 +52,21 @@ type TypeScriptConfiguration = {
   typings?: string;
 };
 
-type ESLintConfiguration = {
+declare type ESLintConfiguration = {
   /**
    * Configuration settings for eslint.
    */
   eslintConfig?: ESLintConfig;
 };
 
-type JSPMConfiguration = {
+declare type JSPMConfiguration = {
   /**
    * JSPM configuration.
    */
   jspm?: PackageJSON;
 };
 
-type BugsLocation =
+declare type BugsLocation =
   | string
   | {
       /**
@@ -45,19 +79,19 @@ type BugsLocation =
       email?: string;
     };
 
-type LicenseID = LiteralUnion<"MIT" | "ISC", string>;
+declare type LicenseID = LiteralUnion<'MIT' | 'ISC', string>;
 
-type License = {
+declare type License = {
   type?: LicenseID;
   url?: string;
 };
 
-type Licenses = License[];
+declare type Licenses = License[];
 
 /**
  * A person who has been involved in creating or maintaining the package.
  */
-type Person =
+declare type Person =
   | string
   | {
       name: string;
@@ -65,13 +99,13 @@ type Person =
       email?: string;
     };
 
-type Bin =
+declare type Bin =
   | string
   | {
       [binary: string]: string;
     };
 
-type DirectoryLocations = {
+declare type DirectoryLocations = {
   /**
    * Location for executable scripts. Sugar to generate entries in the `bin` property by walking the folder.
    */
@@ -101,10 +135,10 @@ type DirectoryLocations = {
 /**
 Specify the place where your code lives. This is helpful for people who want to contribute.
 */
-type Repository =
+declare type Repository =
   | string
   | {
-      type: LiteralUnion<"git" | "svn", string>;
+      type: LiteralUnion<'git' | 'svn', string>;
       /**
        * A publicly available (perhaps read-only) url that can be handed directly to a VCS program without any modification.
        */
@@ -119,77 +153,77 @@ type Repository =
 /**
 Dependencies of the package. The version range is a string which has one or more space-separated descriptors. Dependencies can also be identified with a tarball or Git URL.
 */
-type Dependencies = {
+declare type Dependencies = {
   [packageName: string]: string;
 };
 
-type PeerDependenciesMeta = {
+declare type PeerDependenciesMeta = {
   [packageName: string]: {
     optional: true;
   };
 };
 
-type Engines = {
-  [EngineName in "npm" | "node" | string]: string;
+declare type Engines = {
+  [EngineName in 'npm' | 'node' | string]: string;
 };
 
-type OS = LiteralUnion<
-  | "aix"
-  | "darwin"
-  | "freebsd"
-  | "linux"
-  | "openbsd"
-  | "sunos"
-  | "win32"
-  | "!aix"
-  | "!darwin"
-  | "!freebsd"
-  | "!linux"
-  | "!openbsd"
-  | "!sunos"
-  | "!win32",
+declare type OS = LiteralUnion<
+  | 'aix'
+  | 'darwin'
+  | 'freebsd'
+  | 'linux'
+  | 'openbsd'
+  | 'sunos'
+  | 'win32'
+  | '!aix'
+  | '!darwin'
+  | '!freebsd'
+  | '!linux'
+  | '!openbsd'
+  | '!sunos'
+  | '!win32',
   string
 >;
 
-type CPU = LiteralUnion<
-  | "arm"
-  | "arm64"
-  | "ia32"
-  | "mips"
-  | "mipsel"
-  | "ppc"
-  | "ppc64"
-  | "s390"
-  | "s390x"
-  | "x32"
-  | "x64"
-  | "!arm"
-  | "!arm64"
-  | "!ia32"
-  | "!mips"
-  | "!mipsel"
-  | "!ppc"
-  | "!ppc64"
-  | "!s390"
-  | "!s390x"
-  | "!x32"
-  | "!x64",
+declare type CPU = LiteralUnion<
+  | 'arm'
+  | 'arm64'
+  | 'ia32'
+  | 'mips'
+  | 'mipsel'
+  | 'ppc'
+  | 'ppc64'
+  | 's390'
+  | 's390x'
+  | 'x32'
+  | 'x64'
+  | '!arm'
+  | '!arm64'
+  | '!ia32'
+  | '!mips'
+  | '!mipsel'
+  | '!ppc'
+  | '!ppc64'
+  | '!s390'
+  | '!s390x'
+  | '!x32'
+  | '!x64',
   string
 >;
 
-type Funding =
+declare type Funding =
   | string
   | {
       /**
-       * The type of funding.
+       * The declare type of funding.
        */
       type?: LiteralUnion<
-        | "github"
-        | "opencollective"
-        | "patreon"
-        | "individual"
-        | "foundation"
-        | "corporation",
+        | 'github'
+        | 'opencollective'
+        | 'patreon'
+        | 'individual'
+        | 'foundation'
+        | 'corporation',
         string
       >;
       /**
@@ -198,7 +232,7 @@ type Funding =
       url: string;
     };
 
-type Scripts = {
+declare type Scripts = {
   /**
    * Run **before** the package is published (Also run on local `npm install` without any arguments).
    */
@@ -315,7 +349,7 @@ type Scripts = {
   [scriptName in string]?: string;
 };
 
-type NonStandardEntryPoints = {
+declare type NonStandardEntryPoints = {
   /**
    * An ECMAScript module ID that is the primary entry point to the program.
    */
@@ -345,7 +379,7 @@ type NonStandardEntryPoints = {
   sideEffects?: boolean | string[];
 };
 
-type Exports = {
+declare type Exports = {
   require?: string;
   import?: string;
   [path: string]: string;
@@ -355,7 +389,7 @@ type Exports = {
  * Type for [npm's `package.json` file](https://docs.npmjs.com/creating-a-package-json-file).
  * Also includes types for fields used by other popular projects, like TypeScript and Yarn.
  */
-export type PackageJSON = JSONObject & {
+export declare type PackageJSON = JSONObject & {
   /**
    * The name of the package.
    */
@@ -375,7 +409,7 @@ export type PackageJSON = JSONObject & {
   /**
    * The URL to the package's homepage.
    */
-  homepage?: LiteralUnion<".", string>;
+  homepage?: LiteralUnion<'.', string>;
   /**
    * The URL to the package's issue tracker and/or the email address to which issues should be reported.
    */

@@ -1,5 +1,10 @@
 ## _CHANGELOG_
 
+### v0.4.0 | 09/09/2021
+
+- Fixed missing types used for package.json
+- Applied declares for various types used by the tsconfig util
+
 ### v0.3.0 | 23/08/2021
 
 - Provided getter `vars` to `env{}` method which returns vars in a `.env` file at cwd

@@ -18,11 +18,18 @@ export const path = (url) => resolve(process.cwd(), url);
  * Environment conditional executor
  */
 export const env = {
-
-  get vars () { return dotenv.config(); },
-  get dev () { return !process.env.prod; },
-  get prod () { return process.env.prod === 'true'; },
-  get watch () { return process.env.ROLLUP_WATCH === 'true'; },
+  get vars () {
+    return dotenv.config();
+  },
+  get dev () {
+    return !process.env.prod;
+  },
+  get prod () {
+    return process.env.prod === 'true';
+  },
+  get watch () {
+    return process.env.ROLLUP_WATCH === 'true';
+  },
   is: (condition, returns) => env[condition]
     ? returns
     : typeof returns === 'function'
