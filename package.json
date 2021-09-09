@@ -39,22 +39,22 @@
     ]
   },
   "devDependencies": {
-    "@brixtol/prettier-config": "^1.0.3",
+    "@brixtol/prettier-config": "workspace:^1.1.0",
     "@rollup/plugin-beep": "^0.2.0",
-    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-commonjs": "^20.0.0",
     "@types/jsonminify": "^0.4.1",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-delete": "^2.0.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "types-eslintrc": "^1.0.3"
+    "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
     "chalk": "^4.1.2",
     "dotenv": "^10.0.0",
-    "fs-extra": "^9.1.0",
+    "fs-extra": "^10.0.0",
     "jsonminify": "^0.4.1",
-    "strip-indent": "^3.0.0",
-    "strip-json-comments": "^3.1.1",
+    "strip-indent": "^4.0.0",
+    "strip-json-comments": "^4.0.0",
+    "types-eslintrc": "^1.0.3",
     "types-json": "^1.2.2"
   }
 }
