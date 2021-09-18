@@ -17,10 +17,10 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/brixtol/rollup-plugin-utils"
+    "url": "https://github.com/BRIXTOL/rollup-utils"
   },
   "bugs": {
-    "url": "https://github.com/brixtol/rollup-plugin-utils/issues"
+    "url": "https://github.com/BRIXTOL/rollup-utils/issues"
   },
   "scripts": {
     "dev": "rollup -c -w",
