@@ -1,5 +1,12 @@
 ## _CHANGELOG_
 
+### v1.0.0 | 07/10/2021
+
+- Cleaned up file
+- Provided missing types
+- Improved export methods in declarations
+- Update readme.md and inform upon all available utils.
+
 ### v0.4.0 | 09/09/2021
 
 - Fixed missing types used for package.json

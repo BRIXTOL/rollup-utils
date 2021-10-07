@@ -1,6 +1,6 @@
 {
   "name": "@brixtol/rollup-utils",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "description": "Rollup plugin utilities for working with the Brixtol Textiles monorepo codebase",
   "author": {
     "name": "Νίκος Σαβίδης ",
@@ -39,9 +39,9 @@
     ]
   },
   "devDependencies": {
-    "@brixtol/prettier-config": "workspace:^1.1.0",
+    "@brixtol/prettier-config": "workspace:^1.2.0",
     "@rollup/plugin-beep": "^0.2.0",
-    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-commonjs": "^21.0.0",
     "@types/jsonminify": "^0.4.1",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-delete": "^2.0.0",
