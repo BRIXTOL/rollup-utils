@@ -7,34 +7,35 @@ import chalk from 'chalk';
 import dotenv from 'dotenv';
 
 /**
- * Path Resolver Helper
- *
- * @param {string} url
- * @returns {string}
- */
-export const path = (url) => resolve(process.cwd(), url);
-
-/**
- * Environment conditional executor
+ * @type {import('./types/index')['env']}
  */
 export const env = {
   get vars () {
+
     return dotenv.config();
+
   },
   get dev () {
+
     return !process.env.prod;
+
   },
   get prod () {
+
     return process.env.prod === 'true';
+
   },
   get watch () {
+
     return process.env.ROLLUP_WATCH === 'true';
+
   },
-  is: (condition, returns) => env[condition]
-    ? returns
-    : typeof returns === 'function'
+  is: (condition, returns) => {
+
+    return env[condition] ? returns : typeof returns === 'function'
       ? null
-      : false,
+      : false;
+  },
   if: condition => initial => combined => {
 
     if (env[condition]) return initial;
@@ -65,7 +66,7 @@ export const env = {
 };
 
 /**
- * Provides config files shortcuts
+ * @type {import('./types/index')['config']}
  */
 export const config = (() => {
 
@@ -75,10 +76,22 @@ export const config = (() => {
   const path = join(cwd, 'tsconfig.json');
 
   return {
-    get cwd () { return cwd; }
-    , get package () { return pkg; }
-    , get external () { return Object.keys(pkg.dependencies); }
-    , get tsconfig () {
+    get cwd () {
+
+      return cwd;
+
+    },
+    get package () {
+
+      return pkg;
+
+    },
+    get external () {
+
+      return Object.keys(pkg.dependencies);
+
+    },
+    get tsconfig () {
 
       if (existsSync(path)) {
         const json = readFileSync(path).toString();
@@ -87,13 +100,24 @@ export const config = (() => {
       }
 
       return null;
-    }
-    , path: (uri) => resolve(cwd, uri)
-    , alias: (ids, src = 'src') => ids.map((find) => ({
-      find
-      , replacement: resolve(cwd, `./${src}/${find}`)
-    }))
-    , output: {
+
+    },
+    path: (uri) => {
+
+      return resolve(cwd, uri);
+
+    },
+    alias: (ids, src = 'src') => {
+
+      return ids.map(
+        find => ({
+          find,
+          replacement: resolve(cwd, `./${src}/${find}`)
+        })
+      );
+
+    },
+    output: {
       get cjs () { return pkg.exports.require || null; },
       get esm () { return pkg.exports.import || null; },
       get exports () { return pkg.exports || null; },
@@ -104,9 +128,12 @@ export const config = (() => {
 })();
 
 /**
- * Minify JSON and strip JSONC files
- *
- * @param {string} content
+ * @type {import('./types/index')['path']}
+ */
+export const path = (url) => resolve(process.cwd(), url);
+
+/**
+ * @type {import('./types/index')['jsonmin']}
  */
 export const jsonmin = (content) => {
 
@@ -126,10 +153,7 @@ export const jsonmin = (content) => {
 };
 
 /**
- * License banner applied to javascript files
- *
- * @param {object} package
- * @returns {string}
+ * @type {import('./types/index')['banner']}
  */
 export const banner = (license = 'PROPRIETARY') => {
 
@@ -197,6 +221,8 @@ export const banner = (license = 'PROPRIETARY') => {
        */`
       );
     case 'CC BY-NC-ND 4.0':
+    case 'REFER':
+
       return stripIndent(
         `
       /**
