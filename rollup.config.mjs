@@ -4,7 +4,7 @@ import beep from '@rollup/plugin-beep';
 import copy from 'rollup-plugin-copy';
 import del from 'rollup-plugin-delete';
 import { terser } from 'rollup-plugin-terser';
-import { config } from './src/index.mjs';
+import { config, env } from './src/index.mjs';
 
 export default Rollup(
   {
@@ -13,7 +13,7 @@ export default Rollup(
       {
         format: 'cjs',
         file: config.output.cjs,
-        sourcemap: process.env.prod ? false : 'inline',
+        sourcemap: env.is('dev', 'inline'),
         exports: 'named',
         esModule: false,
         preferConst: true
@@ -21,7 +21,7 @@ export default Rollup(
       {
         format: 'es',
         file: config.output.esm,
-        sourcemap: process.env.prod ? false : 'inline',
+        sourcemap: env.is('dev', 'inline'),
         preferConst: true
       }
     ],
@@ -38,14 +38,14 @@ export default Rollup(
       del(
         {
           verbose: true,
-          runOnce: !process.env.prod,
+          runOnce: !env.prod,
           targets: 'package/*'
         }
       ),
       copy(
         {
           verbose: true,
-          copyOnce: !process.env.prod,
+          copyOnce: !env.prod,
           targets: [
             {
               src: 'src/types/*.ts',
