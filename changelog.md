@@ -1,5 +1,9 @@
 ## _CHANGELOG_
 
+### v1.1.2 | 13/10/2021
+
+- rollback concat and use spread
+
 ### v1.1.1 | 13/10/2021
 
 - post-publish script
