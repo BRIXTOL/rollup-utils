@@ -29,6 +29,24 @@ export declare const path: (uri: string) => string;
 export declare const jsonmin: (content: string) => string;
 
 /**
+ * Get Time
+ *
+ * Returns UTC Time/Date or pretty format with suffixed number.
+ * Optionally provide a predefined UTC date string.
+ *
+ * @example
+ * // Without date or suffix params
+ * 'Mon, 04 Oct 2021 02:53:57 GMT'
+ *
+ * // With date (includes suffix)
+ * '4th October 2021'
+ *
+ * @param {utc}
+ * Pass in an option data/time string of Date object
+ */
+export declare const date: (utc?: string | Date) => string;
+
+/**
  * Banner - Applies a licence banner to output bundles generated
  * by rollup for proprietary software of the project
  */

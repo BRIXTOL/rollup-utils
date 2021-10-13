@@ -6,6 +6,8 @@ import stripIndent from 'strip-indent';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 
+const getenv = (variable) => process.env[variable];
+
 /**
  * @type {import('./types/index')['env']}
  */
@@ -17,12 +19,12 @@ export const env = {
   },
   get dev () {
 
-    return !process.env.prod;
+    return !this.prod;
 
   },
   get prod () {
 
-    return process.env.prod === 'true';
+    return getenv('prod') === 'true';
 
   },
   get watch () {
@@ -32,18 +34,21 @@ export const env = {
   },
   is: (condition, returns) => {
 
-    return env[condition] ? returns : typeof returns === 'function'
-      ? null
-      : false;
+    return getenv(condition) ? returns : (
+      typeof returns === 'string' ||
+      typeof returns === 'number' ||
+      typeof returns === 'boolean'
+    ) ? false
+      : null;
   },
   if: condition => initial => combined => {
 
-    if (env[condition]) return initial;
+    if (getenv(condition)) return initial;
 
     const arrInitial = Array.isArray(initial);
     const arrCombined = Array.isArray(combined);
 
-    if (arrInitial && arrCombined) return [ ...initial, ...combined ];
+    if (arrInitial && arrCombined) return initial.concat(combined);
 
     const strInitial = typeof initial === 'string';
     const strCombined = typeof combined === 'string';
@@ -57,11 +62,41 @@ export const env = {
 
     if (arrInitial && fnCombined) return [ ...initial, combined ];
     if (fnInitial && arrCombined) return [ initial, ...combined ];
-    if (fnInitial && fnCombined) return [ initial, combined ];
+    if (fnInitial && fnCombined) return initial.concat(combined);
 
     return combined;
 
   }
+
+};
+
+/**
+ * @type {import('./types/index')['date']}
+ */
+export const date = (utc) => {
+
+  if (!utc) utc = new Date();
+
+  const time = new Date(utc).toLocaleDateString('en-gb', {
+    year: 'numeric'
+    , month: 'long'
+    , day: 'numeric'
+  });
+
+  return time.replace(/([0-9]+)/, (n) => {
+
+    const day = Number(n);
+
+    return n + (
+      [
+        ''
+        , 'st'
+        , 'nd'
+        , 'rd'
+      ][day / 10 % 10 ^ 1 && day % 10] || 'th'
+    );
+
+  });
 
 };
 
