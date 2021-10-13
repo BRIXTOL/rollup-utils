@@ -1,5 +1,9 @@
 ## _CHANGELOG_
 
+### v1.1.0 | 13/10/2021
+
+- Added time utility which returns a pretty date
+
 ### v1.0.0 | 07/10/2021
 
 - Cleaned up file
