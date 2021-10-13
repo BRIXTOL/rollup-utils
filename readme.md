@@ -10,13 +10,14 @@ We here at Brixtol Textiles leverage [Rollup](https://rollupjs.org/guide/en/) ex
 
 # Utilities
 
-| Export               | Description                                                               |
-| -------------------- | ------------------------------------------------------------------------- |
-| `path(string)`       | Resolves a Path to location to current working directory.                 |
-| `env.*`              | Provides ENV operations for `dev`, `prod` and `watch` builds.             |
-| `config.*`           | Enables `package.json` or other config files within `rollup.config.mjs`   |
-| `banner({}, string)` | Generates comment banner in bundles that includes License and information |
-| `jsonmin(string)`    | Minifies JSON, used with [rollup-plugin-copy](https://git.io/J0Lv9)       |
+| Export               | Description                                                                |
+| -------------------- | -------------------------------------------------------------------------- |
+| `path(string)`       | Resolves a Path to location to current working directory.                  |
+| `env.*`              | Provides ENV operations for `dev`, `prod` and `watch` builds.              |
+| `config.*`           | Enables `package.json` or other config files within `rollup.config.mjs`    |
+| `banner({}, string)` | Generates comment banner in bundles that includes License and information  |
+| `jsonmin(string)`    | Minifies JSON, used with [rollup-plugin-copy](https://git.io/J0Lv9)        |
+| `date(time?)`        | Returns a pretty formatted date with number suffix, eg: `1st October 2021` |
 
 # Install
 
@@ -119,7 +120,7 @@ env.if('watch')([])([])
 
 Similar to the `env.if()` method the `env.is()` is a conditional executor. The `env.is()` method will either return the 2nd parameter when an `--environment` flag value is matched else it returns boolean `false` or `null` value (depending on the type passed). The 2nd parameter can be of a type `string`, `boolean` or rollup `plugin()`.
 
-The `dev` is deault, so running `rollup -c -w` results in:
+The `dev` is default, so running `rollup -c -w` results in:
 
 <!-- prettier-ignore -->
 ```ts
@@ -128,11 +129,19 @@ import { env } from '@brixtol/rollup-utils'
 // String
 env.is('dev', 'hello world')    // => 'hello world'
 env.is('watch', 'hello world')  // => 'hello world'
+
+//
+// This will return false as we called -c and -w
+//
 env.is('prod', 'hello world')   // => false
 
 // Plugins
 env.is('dev', terser())    // => terser()
 env.is('watch', terser())  // => terser()
+
+//
+// This will return null as we called -c and -w
+//
 env.is('prod', terser())   // => null
 ```
 
@@ -143,14 +152,22 @@ If you run `rollup -c --environment prod` it results in:
 import { env } from '@brixtol/rollup-utils'
 
 // String
-env.is('dev', 'hello world')    // => false
-env.is('watch', 'hello world')  // => false
 env.is('prod', 'hello world')   // => 'hello world'
 
+//
+// These will return false because we have an "--environment prod" flag
+//
+env.is('dev', 'hello world')    // => false
+env.is('watch', 'hello world')  // => false
+
 // Plugins
+env.is('prod', terser())   // => terser()
+
+//
+// These will return null because we have an "--environment prod" flag
+//
 env.is('dev', terser())    // => null
 env.is('watch', terser())  // => null
-env.is('prod', terser())   // => terser()
 ```
 
 ## `config.*`
@@ -197,6 +214,16 @@ config.main;
 config.module;
 ```
 
+## `date`
+
+The `date` export returns UTC Time/Date in pretty format with suffixed number. Optionally accepts parameter value of UTC date string.
+
+```ts
+import { date } from '@brixtol/rollup-utils';
+
+date(); // => 1st October 2021
+```
+
 ## `path`
 
 The `path` export is a resolver function that will resolve paths from the current working directory. This is just sugar for `path.resolve(process.cwd(), '/path/file.js')` but uses the cached `cwd` reference. Helpful if you need complete paths.
@@ -213,7 +240,7 @@ jsonmin(`/* comment */ { "field": "value" }`); // => {"field":"value"}
 
 ## `banner`
 
-The `banner` export can be passed to `rollup.output.banner` which will return an inline Licence. The licences will use fields contained within your `package.json` to inform upon project specifics in the licences (like copyright, version, author etc).
+The `banner` export can be passed to `rollup.output.banner` which will return an inline Licence. The licenses will use fields contained within your `package.json` to inform upon project specifics in the licenses (like copyright, version, author etc).
 
 In your `rollup.config.mjs` file:
 
