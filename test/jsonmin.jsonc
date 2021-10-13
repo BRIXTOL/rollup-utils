@@ -1,0 +1,13 @@
+{
+  "id": 100,
+  "text": "Hello World", // Some Comment
+  /* Another Comment */
+  "array": [
+    {
+      "boolean": true,
+      "object": {
+        "number": 1000.1 // Yet another comment
+      }
+    }
+  ]
+}

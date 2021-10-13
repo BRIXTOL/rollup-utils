@@ -25,12 +25,20 @@
   "scripts": {
     "dev": "rollup -c -w",
     "build": "rollup -c --environment prod",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava --color --verbose --watch --timeout=2m"
   },
   "prettier": "@brixtol/prettier-config",
   "eslintConfig": {
     "ignorePatterns": "package",
     "extends": "@brixtol/eslint-config"
+  },
+  "ava": {
+    "require": [
+      "esm"
+    ],
+    "files": [
+      "./test/*"
+    ]
   },
   "release": {
     "branches": [
@@ -43,6 +51,8 @@
     "@rollup/plugin-beep": "^0.2.0",
     "@rollup/plugin-commonjs": "^21.0.0",
     "@types/jsonminify": "^0.4.1",
+    "ava": "^3.15.0",
+    "esm": "^3.2.25",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-terser": "^7.0.2"
