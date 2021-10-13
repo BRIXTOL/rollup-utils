@@ -1,5 +1,9 @@
 ## _CHANGELOG_
 
+### v1.1.1 | 13/10/2021
+
+- post-publish script
+
 ### v1.1.0 | 13/10/2021
 
 - Added time utility which returns a pretty date

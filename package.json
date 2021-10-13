@@ -25,7 +25,8 @@
   "scripts": {
     "dev": "rollup -c -w",
     "build": "rollup -c --environment prod",
-    "test": "ava --color --verbose --watch --timeout=2m"
+    "test": "ava --color --verbose --watch --timeout=2m",
+    "postpublish": "pnpm up @brixtol/rollup-config -r"
   },
   "prettier": "@brixtol/prettier-config",
   "eslintConfig": {
