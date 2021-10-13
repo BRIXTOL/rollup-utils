@@ -1,23 +1,23 @@
 # @brixtol/rollup-utils
 
-Various rollup plugin utilities for working with packages in the [Brixtol Textiles](https://brixtoltextiles.com) monorepo workspace. These utilities are collection of commonly used modules leveraged in development for both closed and open source and modules.
+Various rollup plugin utilities for working with packages in the [Brixtol Textiles](https://brixtoltextiles.com) monorepo workspace. These utilities are a collection of commonly used modules leveraged in development for both closed and open source and modules across the Brixtol monorepo.
 
-> This module is also provided within [@brixtol/rollup-config](https://github.com/BRIXTOL/rollup-config). If you are using that module, then you do not need to install this.
+> This module is also provided within [@brixtol/rollup-config](https://github.com/BRIXTOL/rollup-config). If you are using that module then you do not need to install this.
 
 ### Why?
 
-We here at Brixtol Textiles leverage [Rollup](https://rollupjs.org/guide/en/) exclusively. This package is a collection of various project specific utilities that assist in the bundling and transpilation process of JavaScript packages. The utilities exported in this module provide a clean and easy way to execute commonly used functions.
+We here at Brixtol Textiles leverage [Rollup](https://rollupjs.org/guide/en/) exclusively. This package is a collection of various utilities that assist in the bundling and transpilation process of JavaScript/TypeScript packages. The utilities exported in this module provide a clean and easy way to execute commonly used functions. Using this enables us to provide a DRY configuration export and improves productivity in the workspace.
 
 # Utilities
 
-| Export               | Description                                                                |
-| -------------------- | -------------------------------------------------------------------------- |
-| `path(string)`       | Resolves a Path to location to current working directory.                  |
-| `env.*`              | Provides ENV operations for `dev`, `prod` and `watch` builds.              |
-| `config.*`           | Enables `package.json` or other config files within `rollup.config.mjs`    |
-| `banner({}, string)` | Generates comment banner in bundles that includes License and information  |
-| `jsonmin(string)`    | Minifies JSON, used with [rollup-plugin-copy](https://git.io/J0Lv9)        |
-| `date(time?)`        | Returns a pretty formatted date with number suffix, eg: `1st October 2021` |
+| Export                       | Description                                                                |
+| ---------------------------- | -------------------------------------------------------------------------- |
+| `path(string)`               | Resolves a Path to location to current working directory.                  |
+| `env.*`                      | Provides ENV operations for `dev`, `prod` and `watch` builds.              |
+| `config.*`                   | Enables `package.json` or other config files within `rollup.config.mjs`    |
+| `banner({}, string)`         | Generates comment banner in bundles that includes License and information  |
+| `jsonmin(string)`            | Minifies JSON, used with [rollup-plugin-copy](https://git.io/J0Lv9)        |
+| `date(utc?: Date \| string)` | Returns a pretty formatted date with number suffix, eg: `1st October 2021` |
 
 # Install
 
@@ -83,7 +83,7 @@ The `env.vars` method will return a parsed list of environment variables contain
 
 The `env.if()` allows us to use single file for development and production bundles. When an `--environment` flag is passed with a of value of `prod` the plugins are concatenated, so first curried parameter is combined with the second curried parameter, which should both be an array list of plugins[].
 
-The `dev` is deault, so running `rollup -c -w` results in:
+The `dev` is default, so running `rollup -c -w` results in:
 
 <!-- prettier-ignore -->
 ```ts
@@ -359,7 +359,7 @@ This option will require you to include the `LICENSE` as the generated text will
 
 ## Contributing
 
-This package licensed under MIT but it exists as part of a monorepo that is closed source. Currently, any contributions, issues and/or feature requests by end users is not possible.
+This package licensed under MIT but it exists as part of a monorepo that is closed source. Contributions, issues and/or feedback is welcome!
 
 ---
 
