@@ -6,8 +6,6 @@ import stripIndent from 'strip-indent';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 
-const getenv = (variable) => process.env[variable];
-
 /**
  * @type {import('./types/index')['env']}
  */
@@ -19,12 +17,12 @@ export const env = {
   },
   get dev () {
 
-    return !this.prod;
+    return !process.env.prod;
 
   },
   get prod () {
 
-    return getenv('prod') === 'true';
+    return process.env.prod === 'true';
 
   },
   get watch () {
@@ -34,7 +32,7 @@ export const env = {
   },
   is: (condition, returns) => {
 
-    return getenv(condition) ? returns : (
+    return env[condition] ? returns : (
       typeof returns === 'string' ||
       typeof returns === 'number' ||
       typeof returns === 'boolean'
@@ -43,12 +41,12 @@ export const env = {
   },
   if: condition => initial => combined => {
 
-    if (getenv(condition)) return initial;
+    if (env[condition]) return initial;
 
     const arrInitial = Array.isArray(initial);
     const arrCombined = Array.isArray(combined);
 
-    if (arrInitial && arrCombined) return initial.concat(combined);
+    if (arrInitial && arrCombined) return [ ...initial, ...combined ];
 
     const strInitial = typeof initial === 'string';
     const strCombined = typeof combined === 'string';
@@ -62,7 +60,7 @@ export const env = {
 
     if (arrInitial && fnCombined) return [ ...initial, combined ];
     if (fnInitial && arrCombined) return [ initial, ...combined ];
-    if (fnInitial && fnCombined) return initial.concat(combined);
+    if (fnInitial && fnCombined) return [ initial, combined ];
 
     return combined;
 
