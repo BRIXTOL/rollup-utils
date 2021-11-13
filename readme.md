@@ -29,9 +29,9 @@ pnpm add @brixtol/rollup-utils --save-dev
 
 ### Usage
 
-Typings explain the utilities in good detail. It's important that when using the `env` util environment values are passed on the command line using `--environment` flag. Pass `prod`from production and either omit or pass `dev` for development.
+Typings explain the utilities in good detail. It's important that when using the `env` util environment values are passed on the command line using the Rollup `--environment` flag. Pass `prod` for production and either omit or pass `dev` for development.
 
-> Custom flags are not supported, only `prod` and `dev` are available.
+> Custom flags are not supported, only `prod` and `dev` are available, you can however pass a flag who's value evaluates to a `'true'` or `'false'` boolean.
 
 <!-- prettier-ignore -->
 ```js
@@ -81,7 +81,7 @@ The `env.vars` method will return a parsed list of environment variables contain
 
 #### `env.if`
 
-The `env.if()` allows us to use single file for development and production bundles. When an `--environment` flag is passed with a of value of `prod` the plugins are concatenated, so first curried parameter is combined with the second curried parameter, which should both be an array list of plugins[].
+The `env.if()` allows us to use single file for development and production bundles. When an `--environment` flag is passed with a of value of `prod` the plugins are concatenated, so first curried parameter is combined with the second curried parameter, which should both be an array list of plugins[]. If you pass a `boolean` type to the first argument in the curry, then `false` will load `dev` plugins whereas `true` executes a concatenation.
 
 The `dev` is default, so running `rollup -c -w` results in:
 
@@ -104,7 +104,7 @@ env.if('dev')([ plugin.commonjs(), plugin.ts() ])([ plugin.terser() ])
 // => [ commonjs(), ts(), terser() ]
 ```
 
-The value supplied must be a prefedined value:
+The value supplied must be a predefined value:
 
 <!-- prettier-ignore -->
 ```ts
@@ -114,6 +114,23 @@ import { env } from '@brixtol/rollup-utils'
 env.if('dev')([])([])
 env.if('prod')([])([])
 env.if('watch')([])([])
+
+// This will look for an env variable called "foo" and see if its value is "true" or "false"
+env.if('foo')([])([])
+```
+
+Passing a `boolean` evaluation opposed to `dev`, `prod` or `watch` value:
+
+<!-- prettier-ignore -->
+```ts
+import { env } from '@brixtol/rollup-utils'
+
+// SAME AS PASSING "dev"
+env.if(1 === 2)([])([])
+
+// SAME AS PASSING "prod"
+env.if(1 === 1)([])([])
+
 ```
 
 #### `env.is`
