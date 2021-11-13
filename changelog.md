@@ -1,5 +1,10 @@
 ## _CHANGELOG_
 
+### v1.2.0 | 13/11/2021
+
+- Fix `is` environment variable conditional for `dev` mode.
+- Allow conditional boolean be passed to `if` and `is` wrappers
+
 ### v1.1.2 | 13/10/2021
 
 - rollback concat and use spread
