@@ -17,12 +17,24 @@ export const env = {
   },
   get dev () {
 
-    return !process.env.prod;
+    if (!this.prod) {
+      process.env.dev = 'true';
+      return true;
+    } else {
+      process.env.dev = 'false';
+    }
+
+    return false;
 
   },
   get prod () {
 
-    return process.env.prod === 'true';
+    if (process.env.prod === 'true') {
+      process.env.dev = 'false';
+      return true;
+    };
+
+    return false;
 
   },
   get watch () {
@@ -30,42 +42,73 @@ export const env = {
     return process.env.ROLLUP_WATCH === 'true';
 
   },
-  is: (condition, returns) => {
+  is (condition, returns) {
 
-    return env[condition] ? returns : (
+    let environment;
+
+    if (typeof condition === 'boolean') {
+      environment = condition;
+    } else {
+      switch (condition) {
+        case 'dev': environment = this.dev; break;
+        case 'prod': environment = this.prod; break;
+        case 'watch': environment = this.watch; break;
+        default: environment = process.env[condition] === 'true';
+      }
+    }
+    if (environment) return returns;
+
+    return (
       typeof returns === 'string' ||
       typeof returns === 'number' ||
       typeof returns === 'boolean'
-    ) ? false
-      : null;
+    ) ? false : null;
+
   },
-  if: condition => initial => combined => {
+  if (condition) {
 
-    if (env[condition]) return initial;
+    let environment;
 
-    const arrInitial = Array.isArray(initial);
-    const arrCombined = Array.isArray(combined);
+    if (typeof condition === 'boolean') {
 
-    if (arrInitial && arrCombined) return [ ...initial, ...combined ];
+      environment = condition;
 
-    const strInitial = typeof initial === 'string';
-    const strCombined = typeof combined === 'string';
+    } else {
+      switch (condition) {
+        case 'dev': environment = this.dev; break;
+        case 'prod': environment = this.prod; break;
+        case 'watch': environment = this.watch; break;
+        default: environment = process.env[condition] === 'true';
+      }
+    }
 
-    if (arrInitial && strCombined) return [ ...initial, combined ];
-    if (strInitial && arrCombined) return [ initial, ...combined ];
-    if (strInitial && strCombined) return [ initial, combined ];
+    return initial => combined => {
 
-    const fnInitial = typeof initial === 'function';
-    const fnCombined = typeof combined === 'function';
+      if (environment) return initial;
 
-    if (arrInitial && fnCombined) return [ ...initial, combined ];
-    if (fnInitial && arrCombined) return [ initial, ...combined ];
-    if (fnInitial && fnCombined) return [ initial, combined ];
+      const arrInitial = Array.isArray(initial);
+      const arrCombined = Array.isArray(combined);
 
-    return combined;
+      if (arrInitial && arrCombined) return [ ...initial, ...combined ];
 
+      const strInitial = typeof initial === 'string';
+      const strCombined = typeof combined === 'string';
+
+      if (arrInitial && strCombined) return [ ...initial, combined ];
+      if (strInitial && arrCombined) return [ initial, ...combined ];
+      if (strInitial && strCombined) return [ initial, combined ];
+
+      const fnInitial = typeof initial === 'function';
+      const fnCombined = typeof combined === 'function';
+
+      if (arrInitial && fnCombined) return [ ...initial, combined ];
+      if (fnInitial && arrCombined) return [ initial, ...combined ];
+      if (fnInitial && fnCombined) return [ initial, combined ];
+
+      return combined;
+
+    };
   }
-
 };
 
 /**
