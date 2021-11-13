@@ -103,12 +103,15 @@ test.serial('Environment conditionals in prod mode', t => {
 
   const plugin = fakeplugin();
 
-  delete process.env.dev;
-
-  t.is(env.is('dev', plugin), null);
-  t.is(env.is('dev', 'valid'), false);
+  // dev is default, these will pass
+  t.is(env.is('dev', plugin), plugin);
+  t.is(env.is('dev', 'valid'), 'valid');
 
   process.env.prod = 'true';
+
+  // these will now not work as we swapped to prod
+  t.is(env.is('dev', 'valid'), false);
+  t.is(env.is('dev', plugin), null);
 
   t.is(env.is('prod', 'valid'), 'valid');
   t.is(env.is('prod', plugin), plugin);
