@@ -1,5 +1,11 @@
 ## _CHANGELOG_
 
+### v1.2.1 | 31/03/2022
+
+- Fixed type export on `config.alias`
+- Enabled `object` to be passed to `alias`
+- Remove a couple of dev dependencies
+
 ### v1.2.0 | 13/11/2021
 
 - Fix `is` environment variable conditional for `dev` mode.
