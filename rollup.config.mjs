@@ -1,6 +1,5 @@
 import { defineConfig as Rollup } from 'rollup';
 import cjs from '@rollup/plugin-commonjs';
-import beep from '@rollup/plugin-beep';
 import copy from 'rollup-plugin-copy';
 import del from 'rollup-plugin-delete';
 import { terser } from 'rollup-plugin-terser';
@@ -54,7 +53,6 @@ export default Rollup(
           ]
         }
       ),
-      beep(),
       cjs(),
       terser(
         {
