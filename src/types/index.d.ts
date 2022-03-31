@@ -41,8 +41,6 @@ export declare const jsonmin: (content: string) => string;
  * // With date (includes suffix)
  * '4th October 2021'
  *
- * @param {utc}
- * Pass in an option data/time string of Date object
  */
 export declare const date: (utc?: string | Date) => string;
 
@@ -150,13 +148,12 @@ export declare const config: {
    * @param {string} [src] Directory to start mapping from
    */
   alias: (
-    ids: string[],
-    src: 'src' | string
+    ids: string[] | { [path: string]: string[] },
+    src?: string
   ) => Array<{
     find: string;
     replacement: string;
   }>;
-
   output: {
     /**
      * Returns the value of `exports.require` in the
