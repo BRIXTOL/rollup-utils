@@ -185,13 +185,24 @@ export const config = (() => {
     },
     alias: (ids, src = 'src') => {
 
-      return ids.map(
-        find => ({
-          find,
-          replacement: resolve(cwd, `./${src}/${find}`)
-        })
-      );
+      if (Array.isArray(ids)) {
 
+        return ids.map(
+          find => ({
+            find: new RegExp(find),
+            replacement: resolve(cwd, `${src}/${find}`)
+          })
+        );
+      }
+
+      if (typeof ids === 'object') {
+        return Object.entries(ids).map(
+          ([ find, [ value ] ]) => ({
+            find,
+            replacement: resolve(cwd, value)
+          })
+        );
+      }
     },
     output: {
       get cjs () { return pkg.exports.require || null; },
